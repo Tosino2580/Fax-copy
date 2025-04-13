@@ -1,0 +1,45 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "vite.config.js",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "dist",
+          "cleanDistDir": true,
+          "environment": {
+            "NODE_ENV": "production"
+          }
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/assets/(.*)",
+        "headers": {
+          "Cache-Control": "public, max-age=31536000, immutable"
+        }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/dist/$1",
+        "headers": {
+          "Cache-Control": "public, max-age=0, must-revalidate"
+        }
+      }
+    ],
+    "env": {
+      "NODE_VERSION": "18.x"
+    },
+    "build": {
+      "env": {
+        "VITE_API_BASE_URL": "@your_api_base_url"
+      }
+    },
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ]
+  }
