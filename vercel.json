@@ -37,9 +37,20 @@
       }
     },
     "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
+    {
+      "source": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
       }
-    ]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff"
+      }
+    }
+  ]
   }
